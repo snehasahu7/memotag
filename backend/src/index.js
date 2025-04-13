@@ -22,7 +22,7 @@ const logWaitlist = () => {
 
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'], 
+  origin: ['http://localhost:5173', 'https://memotag-1.onrender.com/'], 
   methods: ['GET', 'POST'],
   credentials: true
 }));

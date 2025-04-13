@@ -37,7 +37,7 @@ const handleWaitlistSubmit = async (e) => {
   setStatus('loading');
   
   try {
-    const response = await fetch('http://localhost:3001/api/waitlist', {
+    const response = await fetch('https://memotag-1.onrender.com/api/waitlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
