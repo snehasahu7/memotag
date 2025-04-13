@@ -10,7 +10,7 @@ const [waitlistCount, setWaitlistCount] = useState(0);
 // Fetch and log current waitlist
 const fetchWaitlist = async () => {
   try {
-    const response = await fetch('https://memotag-1.onrender.com');
+    const response = await fetch('https://memotag-1.onrender.com/api/waitlist');
     const data = await response.json();
     
     console.log('\n=== Current Waitlist Status ===');
