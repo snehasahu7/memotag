@@ -8,7 +8,7 @@ const Navbar = ({darkmode, setdarkmode}) => {
       <div className="container mx-auto px-4 overflow-x-hidden">
         <div className="flex items-center justify-between h-25">
           {/* Logo/Brand */}
-          <a href="/" className={`text-2xl font-semibold ${darkmode ? 'text-white' : 'text-gray-900'}`}>
+          <a href="/" className={`text-2xl font-semibold ${darkmode ? 'text-blue-800' : 'text-blue-800'}`}>
             MemoTag
           </a>
 
