@@ -3,9 +3,7 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors({
-  origin: 'https://memtag-snehas-projects-ca79600d.vercel.app'
-}));
+app.use(cors());
 
 app.use(express.json());
 
