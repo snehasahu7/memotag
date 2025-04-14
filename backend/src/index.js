@@ -2,13 +2,40 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { body, validationResult } = require('express-validator');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 
-const waitlist = new Set();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100 
+});
 
+// Define allowed origins
+const allowedOrigins = [
+  'http://localhost:5173',                                   
+  'https://memotag-1.onrender.com',                          
+  'https://memtag-snehas-projects-ca79600d.vercel.app',     
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null  
+].filter(Boolean);  // Remove null values
+
+// Updated CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://memotag-1.onrender.com/',
+    'https://memtag-snehas-projects-ca79600d.vercel.app'
+  ], 
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+// Request size limits
+app.use(express.json({ limit: '10kb' }));
+
+const waitlist = new Set();
 
 const logWaitlist = () => {
   console.log('\n=== Current Waitlist ===');
@@ -20,22 +47,10 @@ const logWaitlist = () => {
   console.log('-----------------\n');
 };
 
-
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://memotag-1.onrender.com/'], 
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
-
-
-app.use(express.json());
-
-
 app.use((req, res, next) => {
   console.log(`\n${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
-
 
 app.post('/api/waitlist', 
   body('email').isEmail().withMessage('Valid email is required'),
@@ -51,7 +66,6 @@ app.post('/api/waitlist',
     try {
       const { email } = req.body;
 
-      
       if (waitlist.has(email)) {
         console.log('\n Duplicate signup attempt:', email);
         return res.status(400).json({
@@ -60,10 +74,8 @@ app.post('/api/waitlist',
         });
       }
 
-      
       waitlist.add(email);
       
-     
       console.log('\n New waitlist signup:', email);
       logWaitlist();
 
@@ -83,13 +95,11 @@ app.post('/api/waitlist',
     }
 });
 
-
 app.get('/api/waitlist/count', (req, res) => {
   res.json({
     count: waitlist.size
   });
 });
-
 
 app.get('/api/waitlist', (req, res) => {
   res.json({
@@ -97,11 +107,9 @@ app.get('/api/waitlist', (req, res) => {
   });
 });
 
-
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
-
 
 console.log(`
 Server starting...
