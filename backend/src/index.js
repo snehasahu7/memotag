@@ -11,7 +11,7 @@ const waitlist = new Set();
 
 
 const logWaitlist = () => {
-  console.log('\nCurrent Waitlist');
+  console.log('Current Waitlist:');
   console.log('Total Subscribers:', waitlist.size);
   console.log('Emails:');
   [...waitlist].forEach((email, index) => {
