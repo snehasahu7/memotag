@@ -15,7 +15,7 @@ const Hero = ({darkmode, setdarkmode}) => {
               transition={{ duration: 0.5 }}
               className={darkmode?"text-4xl md:text-7xl lg:text-6xl font-bold mb-6 text-[#D6CBFF]":"text-4xl md:text-7xl lg:text-6xl font-bold mb-6 text-[#7c3aed]"}
             >
-              Because Every Memory Matters
+              Next-Gen Dementia Care with AI Precision
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
